@@ -27,6 +27,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    
     - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
