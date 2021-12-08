@@ -28,11 +28,13 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     
-    - uses: act10ns/slack@v1
+    - name: Post to a Slack channel
+        id: slack
+        uses: act10ns/slack@v1
+        if: always()
         with:
           status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#testing'
-        if: always()
-     env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          channel-id: 'C02PRMBUW94'
+          notify_when: 'failure,success'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}   
