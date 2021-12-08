@@ -28,12 +28,14 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     
-    - name: Post to a Slack channel 
-      uses: act10ns/slack@v1
+    - name: Post to a Slack channel
+      id: slack
+      uses: voxmedia/github-action-slack-notify-build@v1
       if: always()
       with:
         status: ${{ job.status }}
-        channel-id: 'C02PRMBUW94'
+        message_id: ${{ steps.firebase-deploy.outputs.urls }}
         notify_when: 'failure,success'
+        channel_id: 'C02PRMBUW94'
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}   
